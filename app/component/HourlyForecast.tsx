@@ -1,3 +1,5 @@
+import { format } from "date-fns";
+
 interface HourlyForecastProps {
   hourly: any;
   unit: "metric" | "imperial";
@@ -13,9 +15,13 @@ const HourlyForecast = ({ hourly, unit }: HourlyForecastProps) => {
         {hourly.time.slice(0, 8).map((time: string, idx: number) => (
           <li
             key={time}
-            className="flex justify-between items-center bg-[#2a2a4a] p-2 rounded-md"
+            className="flex justify-between items-center bg-[#2a2a4a] border border-[#39396c] px-3 py-2.5 rounded-md"
           >
-            <p>{new Date(time).getHours()}:00</p>
+            <div className="flex gap-2 items-center">
+              <div className="text-2xl">🌤</div>
+              <p>{format(time, "h a")}</p>
+            </div>
+            
             <span>{hourly.temperature_2m[idx]}{temperatureUnit}</span>
           </li>
         ))}

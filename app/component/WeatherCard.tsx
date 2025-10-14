@@ -11,33 +11,50 @@ const WeatherCard = ({ location, current, date, unit }: WeatherCardProps) => {
   const precipitationUnit = unit === "metric" ? "mm" : "in";
 
   return (
-    <div className="bg-gradient-to-br from-[#35357a] to-[#24244a] p-6 rounded-2xl text-white shadow-md w-full">
-      <h2 className="text-2xl font-semibold">{location}</h2>
-      <p className="text-gray-300 text-sm mt-1">{date}</p>
-
-      <div className="flex items-center justify-between mt-6">
+    <div className="w-full">
+      <div className="bg-gradient-to-br font-sans flex gap-6 flex-col md:flex-row  justify-between items-center py-16 from-[#5656d5] to-[#1d1dc4] p-6 rounded-2xl text-foreground shadow-md w-full">
         <div>
-          <p className="text-6xl font-bold">{current.temperature_2m}{temperatureUnit}</p>
+            <h2 className="text-2xl font-semibold">{location}</h2>
+            <p className="text-sm mt-1">{date}</p>
         </div>
-        <div className="text-4xl">☀️</div>
+        
+
+        <div className="flex items-center font-sans gap-x-10 justify-between">
+          <div className="text-4xl">☀️</div>
+          <div>
+            <p className="text-4xl md:text-6xl font-bold font-sans">
+              {current.temperature_2m}
+              {temperatureUnit}
+            </p>
+          </div>
+          
+        </div>
       </div>
-
-      <div className="grid grid-cols-4 gap-3 mt-6 text-center text-gray-200">
-        <div>
-          <p className="text-sm">Feels Like</p>
-          <p className="text-lg font-semibold">{current.apparent_temperature}{temperatureUnit}</p>
+      <div className="grid [grid-template-columns:repeat(auto-fit,minmax(8rem,1fr))] gap-3 mt-6 text-left text-gray-200">
+        <div className="bg-[#2a2a4a] border border-[#39396c] rounded-xl px-5 space-y-5 py-4">
+          <p className="text-sm font-bold ">Feels Like</p>
+          <p className="text-lg md:text-2xl font-normal ">
+            {current.apparent_temperature}
+            {temperatureUnit}
+          </p>
         </div>
-        <div>
+        <div className="bg-[#2a2a4a] border border-[#39396c] rounded-xl px-5 space-y-5 py-4">
           <p className="text-sm">Humidity</p>
-          <p className="text-lg font-semibold">{current.relative_humidity_2m}%</p>
+          <p className="text-lg md:text-2xl font-semibold">
+            {current.relative_humidity_2m}%
+          </p>
         </div>
-        <div>
-          <p className="text-sm">Wind</p>
-          <p className="text-lg font-semibold">{current.wind_speed_10m} {windUnit}</p>
+        <div className="bg-[#2a2a4a] border border-[#39396c] rounded-xl px-5 space-y-5 py-4">
+          <p className="text-sm font-bold">Wind</p>
+          <p className="text-lg md:text-2xl font-semibold">
+            {current.wind_speed_10m} {windUnit}
+          </p>
         </div>
-        <div>
-          <p className="text-sm">Precipitation</p>
-          <p className="text-lg font-semibold">{current.precipitation} {precipitationUnit}</p>
+        <div className="bg-[#2a2a4a] border border-[#39396c] rounded-xl px-5 space-y-5 py-4">
+          <p className="text-sm font-bold">Precipitation</p>
+          <p className="text-lg md:text-2xl font-semibold">
+            {current.precipitation} {precipitationUnit}
+          </p>
         </div>
       </div>
     </div>

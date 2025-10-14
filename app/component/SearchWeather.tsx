@@ -7,9 +7,13 @@ import { Button } from "@/components/ui/button";
 import InputSearch from "@/components/ui/search";
 import { fetchLocationSuggestions } from "../utils/weatherApi";
 
-const SearchWeather = () => {
+interface SearchWeatherProps {
+    setSelectedLocation: (location: any) => void;
+}
+
+const SearchWeather = ({setSelectedLocation}: SearchWeatherProps) => {
   const [searchTerm, setSearchTerm] = useState<string>("");
-  const [selectedLocation, setSelectedLocation] = useState<any>(null);
+//   const [selectedLocation, setSelectedLocation] = useState<any>(null);
   const [showDropdown, setShowDropdown] = useState(false);
 
   const { data: suggestions = [], isFetching } = useQuery({
@@ -27,7 +31,7 @@ const SearchWeather = () => {
 
   return (
     <div className="relative flex flex-col items-center justify-center w-full max-w-md mx-auto">
-      <div className="flex items-center justify-center gap-2 w-full">
+      <div className="flex flex-col sm:flex-row items-center justify-center gap-2 w-full">
         <div className="relative w-full">
           <InputSearch
             value={searchTerm}
@@ -36,17 +40,17 @@ const SearchWeather = () => {
               setShowDropdown(true);
             }}
             onFocus={() => setShowDropdown(true)}
-            className="text-foreground w-full font-semibold text-lg border-none outline-none placeholder:text-foreground/80 bg-[hsl(243_23%_24%)] rounded-md px-5 py-2 focus-visible:border-ring focus-visible:ring-foreground focus-visible:ring-[1px]"
+            className="text-foreground w-full font-semibold text-lg border-none outline-none placeholder:text-foreground/80 bg-[#2a2a4a] rounded-md px-5 py-2 focus-visible:border-ring focus-visible:ring-foreground focus-visible:ring-[1px]"
             placeholder="Search for a place..."
           />
 
           {showDropdown && suggestions.length > 0 && (
-            <ul className="absolute z-50 mt-1 w-full bg-[hsl(243_23%_28%)] rounded-md shadow-lg border border-gray-600 max-h-60 overflow-y-auto">
+            <ul className="absolute z-50 mt-1 w-full bg-[#2a2a4a] rounded-md shadow-lg border p-1 border-[#2a2a4a] max-h-60 overflow-y-auto">
               {suggestions.map((location: any) => (
                 <li
                   key={location.id}
                   onClick={() => handleSelect(location)}
-                  className="px-4 py-2 hover:bg-[hsl(243_23%_35%)] cursor-pointer text-foreground text-sm"
+                  className="px-4 py-2 hover:bg-[hsl(243_23%_35%)] cursor-pointer rounded-sm text-foreground text-sm"
                 >
                   {location.name}, {location.admin1 && `${location.admin1}, `}{location.country}
                 </li>
@@ -63,8 +67,8 @@ const SearchWeather = () => {
 
         <Button
           variant="default"
-          className="bg-secondary cursor-pointer py-5 px-5 font-medium hover:bg-secondary/80 focus:border-ring focus:ring-foreground focus:ring-[1px]"
-          onClick={() => console.log("Selected location:", selectedLocation)}
+          className="bg-secondary w-full sm:w-[5rem] cursor-pointer py-5 px-5 font-medium hover:bg-secondary/80 focus:border-ring focus:ring-foreground focus:ring-[1px]"
+          onClick={() => console.log("Selected location:")}
         >
           Search
         </Button>

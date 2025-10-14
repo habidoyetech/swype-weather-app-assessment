@@ -5,7 +5,7 @@ interface UnitSelectorProps {
 
 const UnitSelector = ({ unit, onChange }: UnitSelectorProps) => {
   return (
-    <div className="absolute top-5 right-5">
+    <div className="">
       <select
         className="bg-[#2a2a4a] text-gray-200 px-3 py-2 rounded-md cursor-pointer"
         value={unit}
