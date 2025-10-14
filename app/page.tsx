@@ -12,17 +12,7 @@ export default function Home() {
         </div>
         <div>
           <div className="flex items-center gap-3">
-          <div className="rounded-md bg-[#141427] p-2 flex items-center gap-2">
-            <label className="mr-1 text-sm text-gray-300">Units</label>
-            <select
-              className="bg-transparent outline-none text-sm"
-              value={units}
-              onChange={(e) => setUnits(e.target.value as Units)}
-            >
-              <option value="metric">Metric</option>
-              <option value="imperial">Imperial</option>
-            </select>
-          </div>
+          
         </div>
 
         </div>
