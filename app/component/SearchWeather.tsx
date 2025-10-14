@@ -5,19 +5,7 @@ import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { Button } from "@/components/ui/button";
 import InputSearch from "@/components/ui/search";
-
-const fetchLocations = async (name: string) => {
-  if (!name.trim()) return [];
-  const { data } = await axios.get("https://geocoding-api.open-meteo.com/v1/search", {
-    params: {
-      name,
-      count: 10,
-      language: "en",
-      format: "json",
-    },
-  });
-  return data.results || [];
-};
+import { fetchLocationSuggestions } from "../utils/weatherApi";
 
 const SearchWeather = () => {
   const [searchTerm, setSearchTerm] = useState<string>("");
@@ -26,7 +14,7 @@ const SearchWeather = () => {
 
   const { data: suggestions = [], isFetching } = useQuery({
     queryKey: ["locations", searchTerm],
-    queryFn: () => fetchLocations(searchTerm),
+    queryFn: () => fetchLocationSuggestions(searchTerm),
     enabled: searchTerm.trim().length > 1, // only fetch if term > 1 char
     staleTime: 1000 * 60 * 5, // cache results for 5 min
   });

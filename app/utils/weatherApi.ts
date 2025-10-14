@@ -2,19 +2,36 @@ import axios from "axios";
 
 export const fetchLocationSuggestions = async (name: string) => {
   if (!name.trim()) return [];
-  const { data } = await axios.get("https://geocoding-api.open-meteo.com/v1/search", {
-    params: { name, count: 10, language: "en", format: "json" },
-  });
+  const { data } = await axios.get(
+    "https://geocoding-api.open-meteo.com/v1/search",
+    {
+      params: { name, count: 10, language: "en", format: "json" },
+    }
+  );
   return data.results || [];
 };
 
-export const fetchWeatherData = async (lat: number, lon: number, unit: string) => {
+export const fetchWeatherData = async (
+  lat: number,
+  lon: number,
+  unit: string
+) => {
   const params = {
     latitude: lat,
     longitude: lon,
-    current: ["temperature_2m", "relative_humidity_2m", "apparent_temperature", "precipitation", "wind_speed_10m"].join(","),
+    current: [
+      "temperature_2m",
+      "relative_humidity_2m",
+      "apparent_temperature",
+      "precipitation",
+      "wind_speed_10m",
+    ].join(","),
     hourly: ["temperature_2m", "precipitation", "wind_speed_10m"].join(","),
-    daily: ["temperature_2m_max", "temperature_2m_min", "precipitation_sum"].join(","),
+    daily: [
+      "temperature_2m_max",
+      "temperature_2m_min",
+      "precipitation_sum",
+    ].join(","),
     timezone: "auto",
   };
 
@@ -32,6 +49,8 @@ export const fetchWeatherData = async (lat: number, lon: number, unit: string) =
     });
   }
 
-  const { data } = await axios.get("https://api.open-meteo.com/v1/forecast", { params });
+  const { data } = await axios.get("https://api.open-meteo.com/v1/forecast", {
+    params,
+  });
   return data;
 };
