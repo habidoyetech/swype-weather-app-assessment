@@ -65,12 +65,14 @@ export const weatherApi = createApi({
             'apparent_temperature',
             'precipitation',
             'wind_speed_10m',
+            'weather_code',
           ].join(','),
-          hourly: ['temperature_2m', 'precipitation', 'wind_speed_10m'].join(','),
+          hourly: ['temperature_2m', 'precipitation', 'wind_speed_10m', 'weather_code',].join(','),
           daily: [
             'temperature_2m_max',
             'temperature_2m_min',
             'precipitation_sum',
+            'weather_code',
           ].join(','),
           timezone: 'auto',
         };

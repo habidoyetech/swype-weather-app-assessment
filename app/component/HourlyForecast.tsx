@@ -12,6 +12,7 @@ import {
 } from "@/components/ui/select";
 import { format, formatISO, isAfter } from "date-fns";
 import { useState } from "react";
+import { getWeatherDescription, getWeatherIcon } from "../utils/weatherCodes";
 
 interface HourlyForecastProps {
   hourly: any;
@@ -52,10 +53,6 @@ const HourlyForecast = ({ hourly, unit }: HourlyForecastProps) => {
                   <SelectItem
                     key={day}
                     value={day}
-                    // onClick={() => {
-                    //   setStart(idx * 24)
-                    //   setEnd((idx * 24) + 24)
-                    // }}
                     className="text-foreground bg-[#2a2a4a] active:bg-[#333358] focus:bg-[#333358] focus:text-foreground cursor-pointer  hover:bg-[#333358] hover:text-foreground"
                   >
                     {day}
@@ -70,6 +67,9 @@ const HourlyForecast = ({ hourly, unit }: HourlyForecastProps) => {
       <ul className="flex flex-col gap-2 font-sans">
         {hourly.time.slice(start, end).map((time: string, idx: number) => {
           const date = new Date(time);
+          const weatherCode = hourly.weather_code[idx];
+          const weatherIcon = getWeatherIcon(weatherCode);
+          const weatherDesc = getWeatherDescription(weatherCode);
           if (isAfter(date, new Date())) {
             return (
               <li
@@ -77,7 +77,14 @@ const HourlyForecast = ({ hourly, unit }: HourlyForecastProps) => {
                 className="flex justify-between items-center bg-[#2a2a4a] border border-[#39396c] px-3 py-2.5 rounded-md"
               >
                 <div className="flex gap-2 items-center">
-                  <div className="text-2xl">🌤</div>
+                  <div className="flex items-center gap-2 flex-1 justify-cente">
+                    <img
+                      src={weatherIcon}
+                      alt={weatherDesc}
+                      className="w-8 h-8 object-contain"
+                      title={weatherDesc}
+                    />
+                  </div>
                   <p>{format(time, "h a")}</p>
                 </div>
 
