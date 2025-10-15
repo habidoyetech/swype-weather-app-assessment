@@ -2,12 +2,11 @@
 
 import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
-import axios from "axios";
 import { Button } from "@/components/ui/button";
 import InputSearch from "@/components/ui/search";
-import { fetchLocationSuggestions } from "../utils/weatherApi";
 import { toast } from "sonner";
 import { Loader } from "lucide-react";
+import { useGetLocationSuggestionsQuery, useLazyGetLocationSuggestionsQuery } from "@/lib/services/weatherApi";
 
 interface SearchWeatherProps {
     setSelectedLocation: (location: any) => void;
@@ -17,12 +16,14 @@ const SearchWeather = ({setSelectedLocation}: SearchWeatherProps) => {
   const [searchTerm, setSearchTerm] = useState<string>("");
   const [showDropdown, setShowDropdown] = useState(false);
 
-  const { data: suggestions = [], isFetching } = useQuery({
-    queryKey: ["locations", searchTerm],
-    queryFn: () => fetchLocationSuggestions(searchTerm),
-    enabled: searchTerm.trim().length > 1, // only fetch if term > 1 char
-    staleTime: 1000 * 60 * 5, // cache results for 5 min
-  });
+  const { data: suggestions = [], isFetching } = useGetLocationSuggestionsQuery(
+    searchTerm,
+    {
+      skip: searchTerm.trim().length <= 1, // only fetch if term > 1 char
+    }
+  );
+
+  const [triggerSearch] = useLazyGetLocationSuggestionsQuery();
 
   const handleSelect = (location: any) => {
     setSelectedLocation(location);
@@ -30,16 +31,21 @@ const SearchWeather = ({setSelectedLocation}: SearchWeatherProps) => {
     setShowDropdown(false);
   };
 
-  const handleSearch = () => { 
-    fetchLocationSuggestions(searchTerm).then((results) => {
+  const handleSearch = () => {
+    triggerSearch(searchTerm)
+      .unwrap()
+      .then((results) => {
         if (results.length > 0) {
-            handleSelect(results[0]);
+          handleSelect(results[0]);
+        } else {
+          toast.error("No locations found");
         }
-    }).catch(() => {
-        // Handle error if needed
+      })
+      .catch(() => {
         toast.error("Error fetching location suggestions");
-    });
+      });
   };
+
 
   return (
     <div className="relative flex flex-col items-center justify-center w-full max-w-md mx-auto">

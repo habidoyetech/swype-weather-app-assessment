@@ -1,9 +1,20 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Weather App
+
+![Design preview for the Weather app coding challenge](./preview.jpg)
+
+## Welcome! 👋
+
+Thanks for checking out this front-end coding assessment.
+
+This is a project built with [Next.js](https://nextjs.org), [TailwindCSS](https://tailwindcss.com/), [TansactQuery](https://tanstack.com/query/latest), 
 
 ## Getting Started
 
-First, run the development server:
-
+First, clone the project and run 
+```
+npm install
+```
+and
 ```bash
 npm run dev
 # or
@@ -14,11 +25,28 @@ pnpm dev
 bun dev
 ```
 
+## The Assessment
+
+Your Assessment is to build out this weather app using the [Open-Meteo API](https://open-meteo.com/) and get it looking as close to the design as possible.
+
+
+Your should be able to:
+
+- Search for weather information by entering a location in the search bar
+- View current weather conditions including temperature, weather icon, and location details
+- See additional weather metrics like "feels like" temperature, humidity percentage, wind speed, and precipitation amounts
+- Browse a 7-day weather forecast with daily high/low temperatures and weather icons
+- View an hourly forecast showing temperature changes throughout the day
+- Switch between different days of the week using the day selector in the hourly forecast section
+- Toggle between Imperial and Metric measurement units via the units dropdown 
+- Switch between specific temperature units (Celsius and Fahrenheit) and measurement units for wind speed (km/h and mph) and precipitation (millimeters) via the units dropdown
+- View the optimal layout for the interface depending on their device's screen size
+- See hover and focus states for all interactive elements on the page
+
+
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 
 ## Learn More
 

@@ -1,10 +1,7 @@
 "use client";
 
-import Image from "next/image";
 import SearchWeather from "./component/SearchWeather";
-import { useEffect, useRef, useState } from "react";
-import { useQuery } from "@tanstack/react-query";
-import { fetchWeatherData, getLocationByCoords } from "./utils/weatherApi";
+import { useEffect, useState } from "react";
 import UnitSelector from "./component/UnitSelector";
 import LoadingState from "./component/LoadingState";
 import WeatherCard from "./component/WeatherCard";
@@ -12,8 +9,8 @@ import DailyForecast from "./component/DailyForecast";
 import HourlyForecast from "./component/HourlyForecast";
 import { format, formatDate } from "date-fns";
 import useGeolocation from "./hooks/useGeolocation";
-import axios from "axios";
 import { toast } from "sonner";
+import { useGetWeatherDataQuery, useLazyGetLocationByCoordsQuery } from "@/lib/services/weatherApi";
 
 export default function Home() {
   const [location, setLocation] = useState<any>(null);
@@ -21,22 +18,31 @@ export default function Home() {
   const {lat, lon} = useGeolocation();
 
 
-  const { data, isLoading } = useQuery({
-    queryKey: ["weather", location, unit],
-    queryFn: () =>
-       fetchWeatherData(location.latitude, location.longitude, unit),
-    enabled: !!location, 
-  });
+  const [getLocationByCoords] = useLazyGetLocationByCoordsQuery();
+
+  const { data, isLoading } = useGetWeatherDataQuery(
+    {
+      latitude: location?.latitude,
+      longitude: location?.longitude,
+      unit,
+    },
+    {
+      skip: !location, // Skip query if location is not set
+    }
+  );
 
   useEffect(() => {
     if (lat && lon) {
-      getLocationByCoords(lat, lon)
-      .then((loc) => {setLocation({ ...loc, latitude: lat, longitude: lon })})
-      .catch(() => {
-        toast.error("Unable to fetch your current location from coordinates");
-      });
+      getLocationByCoords({ lat, lon })
+        .unwrap()
+        .then((loc) => {
+          setLocation({ ...loc, latitude: lat, longitude: lon });
+        })
+        .catch(() => {
+          toast.error("Unable to fetch your current location from coordinates");
+        });
     }
-  }, [lon, lat]);
+  }, [lon, lat, getLocationByCoords]);
 
   return (
     <div className="font-mono min-h-screen ">
