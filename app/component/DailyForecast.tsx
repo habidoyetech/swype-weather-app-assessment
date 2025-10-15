@@ -19,7 +19,6 @@ const DailyForecast = ({ daily, unit }: DailyForecastProps) => {
             className="flex flex-col  bg-[#2a2a4a] border border-[#39396c] space-y-5 rounded-xl w-full p-3 text-gray-200"
           >
             <p className="text-sm text-center font-bold">
-              {/* {new Date(day).toLocaleDateString("en-US", { weekday: "short" })} */}
               {format(day, "EEE")}
             </p>
             <div className="text-2xl text-center">🌤</div>

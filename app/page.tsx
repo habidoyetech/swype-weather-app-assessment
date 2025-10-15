@@ -74,6 +74,7 @@ export default function Home() {
                       current={data.current}
                       date={format(new Date(), "EEEE, dd MMM, yyyy")}
                       unit={unit}
+                      isLoading={isLoading}
                     />
                     <DailyForecast  daily={data.daily} unit={unit} />
                   </div>

@@ -6,6 +6,8 @@ import axios from "axios";
 import { Button } from "@/components/ui/button";
 import InputSearch from "@/components/ui/search";
 import { fetchLocationSuggestions } from "../utils/weatherApi";
+import { toast } from "sonner";
+import { Loader } from "lucide-react";
 
 interface SearchWeatherProps {
     setSelectedLocation: (location: any) => void;
@@ -13,7 +15,6 @@ interface SearchWeatherProps {
 
 const SearchWeather = ({setSelectedLocation}: SearchWeatherProps) => {
   const [searchTerm, setSearchTerm] = useState<string>("");
-//   const [selectedLocation, setSelectedLocation] = useState<any>(null);
   const [showDropdown, setShowDropdown] = useState(false);
 
   const { data: suggestions = [], isFetching } = useQuery({
@@ -27,6 +28,17 @@ const SearchWeather = ({setSelectedLocation}: SearchWeatherProps) => {
     setSelectedLocation(location);
     setSearchTerm(`${location.name}, ${location.country}`);
     setShowDropdown(false);
+  };
+
+  const handleSearch = () => { 
+    fetchLocationSuggestions(searchTerm).then((results) => {
+        if (results.length > 0) {
+            handleSelect(results[0]);
+        }
+    }).catch(() => {
+        // Handle error if needed
+        toast.error("Error fetching location suggestions");
+    });
   };
 
   return (
@@ -59,8 +71,10 @@ const SearchWeather = ({setSelectedLocation}: SearchWeatherProps) => {
           )}
 
           {isFetching && (
-            <div className="absolute top-full left-0 mt-1 text-sm text-gray-400">
-              Loading...
+            <div className="absolute w-full  mt-1 text-sm text-foreground bg-[#2a2a4a] rounded-md shadow-lg border border-[#2a2a4a] flex items-center gap-2 px-3 py-2">
+              <Loader/>
+              <span>Search in Progress</span>
+              
             </div>
           )}
         </div>
@@ -68,7 +82,7 @@ const SearchWeather = ({setSelectedLocation}: SearchWeatherProps) => {
         <Button
           variant="default"
           className="bg-secondary w-full sm:w-[5rem] cursor-pointer py-5 px-5 font-medium hover:bg-secondary/80 focus:border-ring focus:ring-foreground focus:ring-[1px]"
-          onClick={() => console.log("Selected location:")}
+          onClick={() => handleSearch()}
         >
           Search
         </Button>

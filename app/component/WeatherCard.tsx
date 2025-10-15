@@ -3,9 +3,10 @@ interface WeatherCardProps {
   current: any;
   date: string;
   unit: "metric" | "imperial";
+  isLoading: boolean;
 }
 
-const WeatherCard = ({ location, current, date, unit }: WeatherCardProps) => {
+const WeatherCard = ({ location, current, date, unit, isLoading }: WeatherCardProps) => {
   const temperatureUnit = unit === "metric" ? "°C" : "°F";
   const windUnit = unit === "metric" ? "km/h" : "mph";
   const precipitationUnit = unit === "metric" ? "mm" : "in";
@@ -13,12 +14,10 @@ const WeatherCard = ({ location, current, date, unit }: WeatherCardProps) => {
   return (
     <div className="w-full">
       <div className="bg-gradient-to-br font-sans flex gap-6 flex-col md:flex-row  justify-between items-center py-16 from-[#5656d5] to-[#1d1dc4] p-6 rounded-2xl text-foreground shadow-md w-full">
-        <div>
+         <div>
             <h2 className="text-2xl font-semibold">{location}</h2>
             <p className="text-sm mt-1">{date}</p>
         </div>
-        
-
         <div className="flex items-center font-sans gap-x-10 justify-between">
           <div className="text-4xl">☀️</div>
           <div>
