@@ -7,6 +7,7 @@ import {
 } from "next/font/google";
 import "./globals.css";
 import ReactQueryProvider from "./Provider/ReactQueryProvider";
+import { Toaster } from "@/components/ui/sonner";
 
 const dmSans = DM_Sans({
   variable: "--font-dm-sans",
@@ -34,6 +35,7 @@ export default function RootLayout({
         className={`${dmSans.variable} ${bricolageGrotesque.variable} antialiased`}
       >
         <ReactQueryProvider>{children}</ReactQueryProvider>
+        <Toaster />
       </body>
     </html>
   );

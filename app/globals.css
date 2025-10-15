@@ -5,6 +5,15 @@
 
 @custom-variant dark (&:is(.dark *));
 
+.scrollbar-hide {
+  -ms-overflow-style: none; 
+  scrollbar-width: none;     
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;            
+}
+
 
 @theme inline {
   --color-background: var(--background);
@@ -137,3 +146,5 @@
     @apply bg-background text-foreground;
   }
 }
+
+

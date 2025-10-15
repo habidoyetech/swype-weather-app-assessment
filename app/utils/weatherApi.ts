@@ -1,4 +1,5 @@
 import axios from "axios";
+// import { format } from "date-fns";
 
 export const fetchLocationSuggestions = async (name: string) => {
   if (!name.trim()) return [];
@@ -52,5 +53,22 @@ export const fetchWeatherData = async (
   const { data } = await axios.get("https://api.open-meteo.com/v1/forecast", {
     params,
   });
+
   return data;
+};
+
+export const getLocationByCoords = async (lat: number, lon: number) => {
+  const url = `https://nominatim.openstreetmap.org/reverse`;
+  const params = {
+    lat,
+    lon,
+    format: "json",
+  };
+  const res = await axios.get(url, { params });
+  const data = res.data;
+
+  return {
+    name: data.address.city || data.address.town || data.address.village || data.address.county,
+    country: data.address.country,
+  };
 };
