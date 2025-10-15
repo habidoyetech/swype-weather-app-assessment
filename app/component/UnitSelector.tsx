@@ -67,7 +67,7 @@ const UnitSelector = ({ unit, onChange }: UnitSelectorProps) => {
               Km/h
               {unit === "metric" ? <Check className="text-foreground" />: ""}
             </DropdownMenuItem>
-            <DropdownMenuItem>
+            <DropdownMenuItem className={`font-semibold text-foreground hover:bg-[#333358] flex justify-between ${unit === "imperial" ? "bg-[#333358] hover:bg-[#39396c]": "bg-transparent hover:bg-transparent"}`}>
               mph
               {unit === "imperial"? <Check className="text-foreground" />: ""}
             </DropdownMenuItem>
@@ -76,11 +76,11 @@ const UnitSelector = ({ unit, onChange }: UnitSelectorProps) => {
           <DropdownMenuLabel className="text-foreground/30">Precipitation</DropdownMenuLabel>
           <DropdownMenuGroup>
             <DropdownMenuItem className={`font-semibold text-foreground hover:bg-[#333358] flex justify-between ${unit === "metric" ? "bg-[#333358] hover:bg-[#39396c]": "bg-transparent hover:bg-transparent"}`}>
-              Celsius (&deg;C)
+              Millimeter (mm)
               {unit === "metric" ? <Check className="text-foreground" />: ""}
             </DropdownMenuItem>
-            <DropdownMenuItem>
-              Fahrenheit (&deg;C)
+            <DropdownMenuItem className={`font-semibold text-foreground hover:bg-[#333358] flex justify-between ${unit === "imperial" ? "bg-[#333358] hover:bg-[#39396c]": "bg-transparent hover:bg-transparent"}`}>
+              Inches (inc)
               {unit === "imperial"? <Check className="text-foreground" />: ""}
             </DropdownMenuItem>
           </DropdownMenuGroup>

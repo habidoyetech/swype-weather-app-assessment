@@ -1,12 +1,10 @@
 # Weather App
 
-![Design preview for the Weather app coding challenge](./preview.jpg)
-
 ## Welcome! 👋
 
 Thanks for checking out this front-end coding assessment.
 
-This is a project built with [Next.js](https://nextjs.org), [TailwindCSS](https://tailwindcss.com/), [TansactQuery](https://tanstack.com/query/latest), 
+This is a project built with [Next.js](https://nextjs.org), [TailwindCSS](https://tailwindcss.com/), [RTKQuery](https://redux-toolkit.js.org/rtk-query/overview), and [ShadcnUI](https://ui.shadcn.com/)
 
 ## Getting Started
 
